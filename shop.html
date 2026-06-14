@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Shop Zentora's premium collection — fashion, beauty, tech, home & accessories. Filter by category and price. Free shipping over $150." />
+  <meta name="theme-color" content="#0a0a0a" />
+  <title>Shop — Zentora Luxury Store</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+  <head>
+    <head>
+      <link rel="stylesheet" href="css/styles.css" />
+  </head>
+</head>
+</head>
+<body data-page="shop">
+
+  <header class="header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">Zen<span>tora</span></a>
+      <nav class="nav-menu" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="shop.html">Shop</a>
+        <a href="index.html#categories">Categories</a>
+        <a href="index.html#deals">Deals</a>
+        <a href="index.html#testimonials">Reviews</a>
+      </nav>
+      <div class="header-actions">
+        <button class="icon-btn wishlist-toggle" aria-label="Wishlist">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          <span class="count wishlist-count">0</span>
+        </button>
+        <button class="icon-btn cart-toggle" aria-label="Shopping cart">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          <span class="count cart-count">0</span>
+        </button>
+        <button class="nav-toggle" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="page-hero">
+    <div class="container">
+      <span class="section-label">The Collection</span>
+      <h1>Shop All Products</h1>
+      <p>Discover our full range of premium fashion, beauty, tech & lifestyle essentials.</p>
+    </div>
+  </div>
+
+  <div class="container shop-layout">
+    <aside class="shop-filters">
+      <h3>Filters</h3>
+
+      <div class="filter-group">
+        <label for="filter-search">Search</label>
+        <input type="search" id="filter-search" placeholder="Search products..." />
+      </div>
+
+      <div class="filter-group">
+        <label for="filter-category">Category</label>
+        <select id="filter-category">
+          <option value="all">All Categories</option>
+          <option value="fashion">Fashion</option>
+          <option value="beauty">Beauty</option>
+          <option value="tech">Tech</option>
+          <option value="home">Home</option>
+          <option value="accessories">Accessories</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label>Price Range ($)</label>
+        <div class="price-range">
+          <input type="number" id="filter-min" placeholder="Min" min="0" />
+          <input type="number" id="filter-max" placeholder="Max" min="0" />
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <label for="filter-sort">Sort By</label>
+        <select id="filter-sort">
+          <option value="featured">Featured</option>
+          <option value="price-low">Price: Low to High</option>
+          <option value="price-high">Price: High to Low</option>
+          <option value="rating">Highest Rated</option>
+          <option value="name">Name A–Z</option>
+        </select>
+      </div>
+
+      <div class="trust-badges" style="margin-top: var(--space-md);">
+        <div class="trust-badge"><span class="trust-icon">🔒</span> Secure Checkout</div>
+        <div class="trust-badge"><span class="trust-icon">↩</span> 30-Day Returns</div>
+      </div>
+    </aside>
+
+    <main>
+      <div class="category-pills">
+        <button class="category-pill active" data-category="all">All</button>
+        <button class="category-pill" data-category="fashion">Fashion</button>
+        <button class="category-pill" data-category="beauty">Beauty</button>
+        <button class="category-pill" data-category="tech">Tech</button>
+        <button class="category-pill" data-category="home">Home</button>
+        <button class="category-pill" data-category="accessories">Accessories</button>
+      </div>
+
+      <div class="shop-toolbar">
+        <span id="result-count">12 products</span>
+      </div>
+
+      <div class="product-grid" id="shop-grid"></div>
+    </main>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom" style="border: none; padding-top: 0;">
+        <span>&copy; 2026 Zentora. All rights reserved.</span>
+        <div class="payment-icons">
+          <span>VISA</span>
+          <span>MC</span>
+          <span>AMEX</span>
+          <span>PayPal</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div class="cart-overlay" role="dialog" aria-label="Shopping cart">
+    <div class="cart-panel">
+      <div class="panel-header">
+        <h3>Your Cart</h3>
+        <button class="panel-close cart-close" aria-label="Close cart">&times;</button>
+      </div>
+      <div class="cart-content"></div>
+    </div>
+  </div>
+
+  <div class="wishlist-overlay" role="dialog" aria-label="Wishlist">
+    <div class="wishlist-panel">
+      <div class="panel-header">
+        <h3>Wishlist</h3>
+        <button class="panel-close wishlist-close" aria-label="Close wishlist">&times;</button>
+      </div>
+      <div class="wishlist-content"></div>
+    </div>
+  </div>
+
+  <a href="https://wa.me/1234567890?text=Hi%20Zentora%2C%20I%20need%20help%20with%20my%20order" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
+    <span class="whatsapp-tooltip">Chat with us</span>
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

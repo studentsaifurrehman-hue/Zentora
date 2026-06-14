@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Secure checkout at Zentora. Fast shipping, encrypted payments, and 30-day money-back guarantee." />
+  <meta name="robots" content="noindex" />
+  <meta name="theme-color" content="#0a0a0a" />
+  <title>Checkout — Zentora</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="checkout">
+
+  <header class="header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">Zen<span>tora</span></a>
+      <nav class="nav-menu" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="shop.html">Shop</a>
+      </nav>
+      <div class="header-actions">
+        <button class="icon-btn cart-toggle" aria-label="Shopping cart">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          <span class="count cart-count">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="page-hero">
+    <div class="container">
+      <span class="section-label">Secure Checkout</span>
+      <h1>Complete Your Order</h1>
+      <p>Your payment is protected with 256-bit SSL encryption.</p>
+    </div>
+  </div>
+
+  <div class="container checkout-layout">
+    <div class="checkout-form-wrapper">
+      <div id="checkout-empty" class="checkout-empty">
+        <div class="cart-empty-icon">◇</div>
+        <h2>Your cart is empty</h2>
+        <p style="color: var(--gray-600); margin: 1rem 0 2rem;">Add some products before checking out.</p>
+        <a href="shop.html" class="btn btn-primary">Continue Shopping</a>
+      </div>
+
+      <div id="checkout-success" class="checkout-success">
+        <div class="success-icon">✓</div>
+        <h2>Thank You for Your Order!</h2>
+        <p style="color: var(--gray-600); margin: 1rem 0;">Order <strong class="order-number"></strong> has been confirmed.</p>
+        <p style="font-size: 0.875rem; color: var(--gray-400);">A confirmation email will be sent shortly.</p>
+        <a href="shop.html" class="btn btn-primary" style="margin-top: 2rem;">Continue Shopping</a>
+      </div>
+
+      <form id="checkout-form">
+        <div class="step-indicator">
+          <div class="step active" data-step="1">Shipping</div>
+          <div class="step" data-step="2">Payment</div>
+          <div class="step" data-step="3">Review</div>
+        </div>
+
+        <!-- Step 1: Shipping -->
+        <div class="checkout-step active" data-step="1">
+          <h3 style="margin-bottom: 1.5rem; font-size: 1.25rem;">Shipping Information</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="first-name">First Name</label>
+              <input type="text" id="first-name" required />
+            </div>
+            <div class="form-group">
+              <label for="last-name">Last Name</label>
+              <input type="text" id="last-name" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" required />
+          </div>
+          <div class="form-group">
+            <label for="address">Address</label>
+            <input type="text" id="address" required />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="city">City</label>
+              <input type="text" id="city" required />
+            </div>
+            <div class="form-group">
+              <label for="country">Country</label>
+              <select id="country" required>
+                <option value="">Select country</option>
+                <option value="US">United States</option>
+                <option value="GB">United Kingdom</option>
+                <option value="DE">Germany</option>
+                <option value="FR">France</option>
+                <option value="CA">Canada</option>
+                <option value="AU">Australia</option>
+                <option value="JP">Japan</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="zip">ZIP / Postal Code</label>
+              <input type="text" id="zip" required />
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone</label>
+              <input type="tel" id="phone" required />
+            </div>
+          </div>
+          <div class="form-actions">
+            <a href="shop.html" class="btn btn-ghost">← Back to Shop</a>
+            <button type="button" class="btn btn-primary" data-step="2">Continue to Payment →</button>
+          </div>
+        </div>
+
+        <!-- Step 2: Payment -->
+        <div class="checkout-step" data-step="2">
+          <h3 style="margin-bottom: 1.5rem; font-size: 1.25rem;">Payment Details</h3>
+          <div class="form-group">
+            <label for="card-name">Name on Card</label>
+            <input type="text" id="card-name" required />
+          </div>
+          <div class="form-group">
+            <label for="card-number">Card Number</label>
+            <input type="text" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19" required />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="expiry">Expiry Date</label>
+              <input type="text" id="expiry" placeholder="MM/YY" maxlength="5" required />
+            </div>
+            <div class="form-group">
+              <label for="cvv">CVV</label>
+              <input type="text" id="cvv" placeholder="123" maxlength="4" required />
+            </div>
+          </div>
+          <div class="trust-badges">
+            <div class="trust-badge">🔒 256-bit SSL Encrypted</div>
+            <div class="trust-badge">✓ PCI Compliant</div>
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn btn-ghost" data-step="1">← Back</button>
+            <button type="button" class="btn btn-primary" data-step="3">Review Order →</button>
+          </div>
+        </div>
+
+        <!-- Step 3: Review -->
+        <div class="checkout-step" data-step="3">
+          <h3 style="margin-bottom: 1.5rem; font-size: 1.25rem;">Review & Place Order</h3>
+          <p style="color: var(--gray-600); margin-bottom: 1.5rem; line-height: 1.7;">
+            By placing your order, you agree to Zentora's Terms of Service and Privacy Policy. 
+            Your payment is secure and your order includes our 30-day money-back guarantee.
+          </p>
+          <div class="trust-badges" style="margin-bottom: 1.5rem;">
+            <div class="trust-badge">🔒 Secure Payment</div>
+            <div class="trust-badge">↩ Money Back Guarantee</div>
+            <div class="trust-badge">✓ Authenticity Guaranteed</div>
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn btn-ghost" data-step="2">← Back</button>
+            <button type="submit" class="btn btn-gold">Place Order</button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <aside class="checkout-summary" id="checkout-summary">
+      <h3>Order Summary</h3>
+    </aside>
+  </div>
+
+  <div class="cart-overlay" role="dialog" aria-label="Shopping cart">
+    <div class="cart-panel">
+      <div class="panel-header">
+        <h3>Your Cart</h3>
+        <button class="panel-close cart-close" aria-label="Close cart">&times;</button>
+      </div>
+      <div class="cart-content"></div>
+    </div>
+  </div>
+
+  <a href="https://wa.me/1234567890?text=Hi%20Zentora%2C%20I%20need%20help%20with%20checkout" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
