@@ -117,14 +117,14 @@
         </div>
 
         <!-- Step 2: Payment -->
-        <div class="checkout-step" data-step="2" style="display: block !important; min-height: 200px; margin-bottom: 2rem;">
+   <div class="checkout-step" data-step="2" style="display: block !important; min-height: 200px; margin-bottom: 2rem;">
     <h3 style="margin-bottom: 1.5rem; font-size: 1.25rem; color: #000000; text-align: left; font-family: sans-serif;">Payment Details</h3>
 
     <div class="payment-methods-wrapper" style="margin-bottom: 2rem; display: block !important; width: 100%;">
         
-        <div style="margin-bottom: 15px; border: 1px solid #ccc; padding: 20px; border-radius: 5px; text-align: left; background-color: #ffffff; display: block !important;">
+        <div style="margin-bottom: 15px; border: 1px solid #ccc; padding: 20px; border-radius: 5px; text-align: left; background-color: #ffffff;">
             <label style="font-weight: bold; cursor: pointer; display: block; color: #000000; font-family: sans-serif;">
-                <input type="radio" name="payment_method" value="cod" checked style="margin-right: 10px; transform: scale(1.2);">
+                <input type="radio" name="payment_method" value="cod" checked onchange="togglePaymentFields()" style="margin-right: 10px; transform: scale(1.2);">
                 Cash on Delivery (COD)
             </label>
             <p style="font-size: 0.875rem; color: #555555; margin: 8px 0 0 25px; font-family: sans-serif;">
@@ -132,9 +132,9 @@
             </p>
         </div>
 
-        <div style="margin-bottom: 15px; border: 1px solid #ccc; padding: 20px; border-radius: 5px; text-align: left; background-color: #ffffff; display: block !important;">
+        <div style="margin-bottom: 15px; border: 1px solid #ccc; padding: 20px; border-radius: 5px; text-align: left; background-color: #ffffff;">
             <label style="font-weight: bold; cursor: pointer; display: block; color: #000000; font-family: sans-serif;">
-                <input type="radio" name="payment_method" value="easypaisa" style="margin-right: 10px; transform: scale(1.2);">
+                <input type="radio" name="payment_method" value="easypaisa" onchange="togglePaymentFields()" style="margin-right: 10px; transform: scale(1.2);">
                 EasyPaisa
             </label>
             <p style="font-size: 0.875rem; color: #555555; margin: 8px 0 0 25px; font-family: sans-serif;">
@@ -142,9 +142,9 @@
             </p>
         </div>
 
-        <div style="margin-bottom: 15px; border: 1px solid #ccc; padding: 20px; border-radius: 5px; text-align: left; background-color: #ffffff; display: block !important;">
+        <div style="margin-bottom: 15px; border: 1px solid #ccc; padding: 20px; border-radius: 5px; text-align: left; background-color: #ffffff;">
             <label style="font-weight: bold; cursor: pointer; display: block; color: #000000; font-family: sans-serif;">
-                <input type="radio" name="payment_method" value="jazzcash" style="margin-right: 10px; transform: scale(1.2);">
+                <input type="radio" name="payment_method" value="jazzcash" onchange="togglePaymentFields()" style="margin-right: 10px; transform: scale(1.2);">
                 JazzCash
             </label>
             <p style="font-size: 0.875rem; color: #555555; margin: 8px 0 0 25px; font-family: sans-serif;">
@@ -153,8 +153,48 @@
         </div>
 
     </div>
+
+    <div id="online-payment-fields" style="display: none; background: #f9f9f9; padding: 20px; border: 1px dashed #21ba45; border-radius: 5px; margin-bottom: 2rem; text-align: left;">
+        <h4 id="payment-field-title" style="margin-top: 0; color: #111; font-family: sans-serif;">Receipt Details</h4>
+        <p style="font-size: 0.85rem; color: #666; margin-bottom: 15px;">Paise bhaijne ke baad niche apna account number aur TRX ID (Receipt ID) lazmi likhein:</p>
+        
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; font-weight: bold; margin-bottom: 5px; font-size: 0.9rem; font-family: sans-serif;">Aapka Account Number (Sender Phone):</label>
+            <input type="text" id="sender-account" placeholder="e.g. 03001234567" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+        </div>
+        
+        <div>
+            <label style="display: block; font-weight: bold; margin-bottom: 5px; font-size: 0.9rem; font-family: sans-serif;">TRX ID / Transaction ID:</label>
+            <input type="text" id="trx-id" placeholder="e.g. 854921475" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+        </div>
+    </div>
+
+    <div class="form-actions" style="display: flex; justify-content: space-between; margin-top: 2rem;">
+        <button type="button" class="btn btn-ghost" data-prev-step style="padding: 10px 20px; cursor: pointer;">← BACK</button>
+        <button type="button" class="btn btn-primary" data-step="3" style="background-color: #111; color: #fff; padding: 10px 25px; border: none; font-weight: bold; cursor: pointer;">REVIEW ORDER →</button>
+    </div>
 </div>
 
+<script>
+// Interface badalne ka function
+function togglePaymentFields() {
+    const selectedMethod = document.querySelector('input[name="payment_method"]:checked').value;
+    const fieldsDiv = document.getElementById('online-payment-fields');
+    const title = document.getElementById('payment-field-title');
+    
+    if (selectedMethod === 'easypaisa') {
+        fieldsDiv.style.display = 'block';
+        title.innerText = 'EasyPaisa Payment Verification';
+        title.style.color = '#21ba45'; // EasyPaisa Green Color
+    } else if (selectedMethod === 'jazzcash') {
+        fieldsDiv.style.display = 'block';
+        title.innerText = 'JazzCash Payment Verification';
+        title.style.color = '#ff6b00'; // JazzCash Orange/Red Color
+    } else {
+        fieldsDiv.style.display = 'none'; // COD par chup jayega
+    }
+}
+</script>
     
 
         <!-- Step 3: Review -->
@@ -235,6 +275,13 @@ document.getElementById('checkout-form').addEventListener('submit', function(e) 
     // Website par success screen dikhane ke liye
     document.getElementById('checkout-form').style.display = 'none';
     document.getElementById('checkout-success').style.display = 'block';
+    const senderAccount = document.getElementById('sender-account').value || 'N/A';
+const trxId = document.getElementById('trx-id').value || 'N/A';
+
+// WhatsApp Message updates:
+`*Payment Method:* ${paymentMethod.toUpperCase()}\n` +
+`*Sender Account:* ${senderAccount}\n` +
+`*TRX ID:* ${trxId}`
 });
 </script>
 </body>
