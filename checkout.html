@@ -138,7 +138,7 @@
                 EasyPaisa
             </label>
             <p style="font-size: 0.875rem; color: #555555; margin: 8px 0 0 25px; font-family: sans-serif;">
-                Hamaray EasyPaisa account par transfer karein: <strong style="color: #000000;">03352754141</strong>
+                Hamaray EasyPaisa account par transfer karein: <strong style="color: #000000;">03332754141</strong>
             </p>
         </div>
 
@@ -148,7 +148,7 @@
                 JazzCash
             </label>
             <p style="font-size: 0.875rem; color: #555555; margin: 8px 0 0 25px; font-family: sans-serif;">
-                Hamaray JazzCash account par transfer karein: <strong style="color: #000000;">03352754141</strong>
+                Hamaray JazzCash account par transfer karein: <strong style="color: #000000;">03332754141</strong>
             </p>
         </div>
 
@@ -282,6 +282,38 @@ const trxId = document.getElementById('trx-id').value || 'N/A';
 `*Payment Method:* ${paymentMethod.toUpperCase()}\n` +
 `*Sender Account:* ${senderAccount}\n` +
 `*TRX ID:* ${trxId}`
+});
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // 1. "Continue to Payment" button ko dhoondna
+    const continueBtn = document.querySelector('button[data-step="2"]');
+    
+    if (continueBtn) {
+        // Purane function ko rok kar apna naya checker lagana
+        continueBtn.addEventListener("click", function(e) {
+            // Shipping ke zaroori boxes ko check karna
+            const firstName = document.getElementById('first-name') || document.querySelector('input[placeholder*="First"]');
+            const phone = document.getElementById('phone') || document.querySelector('input[placeholder*="Phone"]');
+            const address = document.getElementById('address') || document.querySelector('input[placeholder*="Address"]');
+            const city = document.getElementById('city') || document.querySelector('input[placeholder*="City"]');
+            
+            // Agar koi bhi box khali ho
+            if ((firstName && !firstName.value.trim()) || 
+                (phone && !phone.value.trim()) || 
+                (address && !address.value.trim()) || 
+                (city && !city.value.trim())) {
+                
+                // Agale step par jaane se rok dena
+                e.stopImmediatePropagation();
+                e.preventDefault();
+                
+                // Customer ko bolna ke pehle details fill karein
+                alert("⚠️ Please fill in your Shipping Details (Name, Phone, Address, City) before proceeding to Payment!");
+                return false;
+            }
+        }, true); // 'true' lagane se yeh validation pehle chalegi, baki step change baad mein hoga
+    }
 });
 </script>
 </body>
