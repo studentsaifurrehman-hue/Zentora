@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="css/styles.css" />
   <link rel="icon" type="image/png" href="favicon.png.png">
   <style>
-    /* Admin Panel Styling - Customer Se Chupa Rahega */
+    /* Admin Panel Styling */
     .admin-section {
       display: none; 
       background: #fdfdfd;
@@ -53,8 +53,8 @@
       position: fixed;
       bottom: 10px;
       left: 10px;
-      width: 20px;
-      height: 20px;
+      width: 30px;
+      height: 30px;
       background: transparent;
       border: none;
       cursor: pointer;
@@ -122,7 +122,7 @@
           </select>
         </div>
         <div class="admin-form-group">
-          <label>Image Link or Path (e.g. images/shirt.jpg):</label>
+          <label>Image Link or Path:</label>
           <input type="text" id="new-p-img" class="admin-input" placeholder="images/product.jpg ya direct URL link">
         </div>
         <button class="admin-btn" onclick="uploadProductToFirebase()">🚀 Publish to Everyone</button>
@@ -169,6 +169,10 @@
     firebase.initializeApp(firebaseConfig);
     const database = firebase.database();
 
+    // Arrays are completely empty (No old or dummy products)
+    let BASE_PRODUCTS = [];
+    let runtimeProductsList = [];
+
     // Password verification function
     function unlockAdminPanel() {
         const password = prompt("🔑 Enter Admin Password to Upload Products:");
@@ -179,10 +183,6 @@
             alert("❌ Wrong Password! Access Denied.");
         }
     }
-
-    // Purane default dummy products empty kar diye hain
-    let BASE_PRODUCTS = [];
-    let runtimeProductsList = [];
 
     // Cloud Firebase real-time dataset inject logic
     function uploadProductToFirebase() {
