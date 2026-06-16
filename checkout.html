@@ -1,319 +1,435 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Secure checkout at Zentora. Fast shipping, encrypted payments, and 30-day money-back guarantee." />
-  <meta name="robots" content="noindex" />
-  <meta name="theme-color" content="#0a0a0a" />
-  <title>Checkout — Zentora</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/styles.css" />
-</head>
-<body data-page="checkout">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Checkout | Zentora</title>
+    <style>
+        :root {
+            --primary: #111111;
+            --success: #21ba45;
+            --jazzcash: #ff6b00;
+            --gray-light: #f9f9f9;
+            --border: #dddddd;
+        }
 
-  <header class="header">
-    <div class="container header-inner">
-      <a href="index.html" class="logo">Zen<span>tora</span></a>
-      <nav class="nav-menu" aria-label="Main navigation">
-        <a href="index.html">Home</a>
-        <a href="shop.html">Shop</a>
-      </nav>
-      <div class="header-actions">
-        <button class="icon-btn cart-toggle" aria-label="Shopping cart">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-          <span class="count cart-count">0</span>
-        </button>
-      </div>
-    </div>
-  </header>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #ffffff;
+            color: #333;
+            margin: 0;
+            padding: 15px;
+        }
 
-  <div class="page-hero">
-    <div class="container">
-      <span class="section-label">Secure Checkout</span>
-      <h1>Complete Your Order</h1>
-      <p>Your payment is protected with 256-bit SSL encryption.</p>
-    </div>
-  </div>
+        .checkout-layout {
+            max-width: 1000px;
+            margin: 30px auto;
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 30px;
+        }
 
-  <div class="container checkout-layout">
-    <div class="checkout-form-wrapper">
-      <div id="checkout-empty" class="checkout-empty">
-        <div class="cart-empty-icon">◇</div>
-        <h2>Your cart is empty</h2>
-        <p style="color: var(--gray-600); margin: 1rem 0 2rem;">Add some products before checking out.</p>
-        <a href="shop.html" class="btn btn-primary">Continue Shopping</a>
-      </div>
-
-      <div id="checkout-success" class="checkout-success">
-        <div class="success-icon">✓</div>
-        <h2>Thank You for Your Order!</h2>
-        <p style="color: var(--gray-600); margin: 1rem 0;">Order <strong class="order-number"></strong> has been confirmed.</p>
-        <p style="font-size: 0.875rem; color: var(--gray-400);">A confirmation email will be sent shortly.</p>
-        <a href="shop.html" class="btn btn-primary" style="margin-top: 2rem;">Continue Shopping</a>
-      </div>
-
-      <form id="checkout-form">
-        <div class="step-indicator">
-          <div class="step active" data-step="1">Shipping</div>
-          <div class="step" data-step="2">Payment</div>
-          <div class="step" data-step="3">Review</div>
-        </div>
-
-        <!-- Step 1: Shipping -->
-        <div class="checkout-step active" data-step="1">
-          <h3 style="margin-bottom: 1.5rem; font-size: 1.25rem;">Shipping Information</h3>
-          <div class="form-row">
-            <div class="form-group">
-              <label for="first-name">First Name</label>
-              <input type="text" id="first-name" required />
-            </div>
-            <div class="form-group">
-              <label for="last-name">Last Name</label>
-              <input type="text" id="last-name" required />
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" required />
-          </div>
-          <div class="form-group">
-    <label for="phone">Phone Number</label>
-    <input type="text" id="phone" required />
-</div>
-          <div class="form-group">
-            <label for="address">Address</label>
-            <input type="text" id="address" required />
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label for="city">City</label>
-              <input type="text" id="city" required />
-            </div>
-            <div class="form-group">
-              <label for="country">Country</label>
-              <select id="country" required>
-    <option value="">Select country</option>
-    <option value="PK">Pakistan</option>
-</select>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label for="zip">ZIP / Postal Code</label>
-              <input type="text" id="zip" required />
-            </div>
-            <div class="form-group">
-              <label for="phone">Phone</label>
-              <input type="tel" id="phone" required />
-            </div>
-          </div>
-          <div class="form-actions">
-            <a href="shop.html" class="btn btn-ghost">← Back to Shop</a>
-            <button type="button" class="btn btn-primary" data-step="2">Continue to Payment →</button>
-          </div>
-        </div>
-
-        <!-- Step 2: Payment -->
-<div class="checkout-step" data-step="2" style="display: none; min-height: 200px; margin-bottom: 2rem;">
-    <h3 style="margin-bottom: 1.5rem; font-size: 1.25rem; color: #000000; text-align: left; font-family: sans-serif;">PAYMENT DETAILS</h3>
-
-    <div class="payment-methods-wrapper" style="margin-bottom: 2rem; width: 100%;">
-        
-        <div style="margin-bottom: 15px; border: 1px solid #ccc; padding: 20px; border-radius: 5px; text-align: left; background-color: #ffffff;">
-            <label style="font-weight: bold; cursor: pointer; display: block; color: #000000; font-family: sans-serif;">
-                <input type="radio" name="payment_method" value="cod" checked onchange="togglePaymentFields()" style="margin-right: 10px; transform: scale(1.2);">
-                Cash on Delivery (COD)
-            </label>
-            <p style="font-size: 0.875rem; color: #555555; margin: 8px 0 0 25px; font-family: sans-serif;">
-                Jab parcel aapke ghar pahunche tab paise dein. (Pakistan Only)
-            </p>
-        </div>
-
-        <div style="margin-bottom: 15px; border: 1px solid #ccc; padding: 20px; border-radius: 5px; text-align: left; background-color: #ffffff;">
-            <label style="font-weight: bold; cursor: pointer; display: block; color: #000000; font-family: sans-serif;">
-                <input type="radio" name="payment_method" value="easypaisa" onchange="togglePaymentFields()" style="margin-right: 10px; transform: scale(1.2);">
-                EasyPaisa
-            </label>
-            <p style="font-size: 0.875rem; color: #555555; margin: 8px 0 0 25px; font-family: sans-serif;">
-                Hamaray EasyPaisa account par transfer karein: <strong style="color: #000000;">03352754141</strong>
-            </p>
-        </div>
-
-        <div style="margin-bottom: 15px; border: 1px solid #ccc; padding: 20px; border-radius: 5px; text-align: left; background-color: #ffffff;">
-            <label style="font-weight: bold; cursor: pointer; display: block; color: #000000; font-family: sans-serif;">
-                <input type="radio" name="payment_method" value="jazzcash" onchange="togglePaymentFields()" style="margin-right: 10px; transform: scale(1.2);">
-                JazzCash
-            </label>
-            <p style="font-size: 0.875rem; color: #555555; margin: 8px 0 0 25px; font-family: sans-serif;">
-                Hamaray JazzCash account par transfer karein: <strong style="color: #000000;">03352754141</strong>
-            </p>
-        </div>
-
-    </div>
-
-    <div id="online-payment-fields" style="display: none; background: #f9f9f9; padding: 20px; border: 1px dashed #21ba45; border-radius: 5px; margin-bottom: 2rem; text-align: left;">
-        <h4 id="payment-field-title" style="margin-top: 0; color: #111; font-family: sans-serif;">Receipt Details</h4>
-        <p style="font-size: 0.85rem; color: #666; margin-bottom: 15px;">Paise bhaijne ke baad niche apna account number aur TRX ID (Receipt ID) lazmi likhein:</p>
-        
-        <div style="margin-bottom: 15px;">
-            <label style="display: block; font-weight: bold; margin-bottom: 5px; font-size: 0.9rem; font-family: sans-serif;">Aapka Account Number (Sender Phone):</label>
-            <input type="text" id="sender-account" placeholder="e.g. 03001234567" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
-        </div>
-        
-        <div>
-            <label style="display: block; font-weight: bold; margin-bottom: 5px; font-size: 0.9rem; font-family: sans-serif;">TRX ID / Transaction ID:</label>
-            <input type="text" id="trx-id" placeholder="e.g. 854921475" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
-        </div>
-    </div>
-
-    <div class="form-actions" style="display: flex; justify-content: space-between; margin-top: 2rem;">
-        <button type="button" class="btn btn-ghost" data-prev-step style="padding: 10px 20px; cursor: pointer;">← BACK</button>
-        <button type="button" class="btn btn-primary" data-step="3" style="background-color: #111; color: #fff; padding: 10px 25px; border: none; font-weight: bold; cursor: pointer;">REVIEW ORDER →</button>
-    </div>
-</div>
-<script>
-// Interface badalne ka function
-function togglePaymentFields() {
-    const selectedMethod = document.querySelector('input[name="payment_method"]:checked').value;
-    const fieldsDiv = document.getElementById('online-payment-fields');
-    const title = document.getElementById('payment-field-title');
-    
-    if (selectedMethod === 'easypaisa') {
-        fieldsDiv.style.display = 'block';
-        title.innerText = 'EasyPaisa Payment Verification';
-        title.style.color = '#21ba45'; // EasyPaisa Green Color
-    } else if (selectedMethod === 'jazzcash') {
-        fieldsDiv.style.display = 'block';
-        title.innerText = 'JazzCash Payment Verification';
-        title.style.color = '#ff6b00'; // JazzCash Orange/Red Color
-    } else {
-        fieldsDiv.style.display = 'none'; // COD par chup jayega
-    }
-}
-</script>
-    
-
-        <!-- Step 3: Review -->
-        <div class="checkout-step" data-step="3">
-          <h3 style="margin-bottom: 1.5rem; font-size: 1.25rem;">Review & Place Order</h3>
-          <p style="color: var(--gray-600); margin-bottom: 1.5rem; line-height: 1.7;">
-            By placing your order, you agree to Zentora's Terms of Service and Privacy Policy. 
-            Your payment is secure and your order includes our 30-day money-back guarantee.
-          </p>
-          <div class="trust-badges" style="margin-bottom: 1.5rem;">
-            <div class="trust-badge">🔒 Secure Payment</div>
-            <div class="trust-badge">↩ Money Back Guarantee</div>
-            <div class="trust-badge">✓ Authenticity Guaranteed</div>
-          </div>
-          <div class="form-actions">
-            <button type="button" class="btn btn-ghost" data-step="2">← Back</button>
-            <button type="submit" class="btn btn-gold">Place Order</button>
-          </div>
-        </div>
-      </form>
-    </div>
-
-    <aside class="checkout-summary" id="checkout-summary">
-      <h3>Order Summary</h3>
-    </aside>
-  </div>
-
-  <div class="cart-overlay" role="dialog" aria-label="Shopping cart">
-    <div class="cart-panel">
-      <div class="panel-header">
-        <h3>Your Cart</h3>
-        <button class="panel-close cart-close" aria-label="Close cart">&times;</button>
-      </div>
-      <div class="cart-content"></div>
-    </div>
-  </div>
-
-  <a href="https://wa.me/3352754141?text=Hi%20Zentora%2C%20I%20need%20help%20with%20checkout" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
-    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-  </a>
-
-  <script type="module" src="js/app.js"></script>
-  <script>
-document.getElementById('checkout-form').addEventListener('submit', function(e) {
-    e.preventDefault(); // Form ko refresh hone se rokne ke liye
-
-    // Form se customer ki exact details uthana (Phone Number ke sath)
-    const firstName = document.getElementById('first-name').value;
-    const lastName = document.getElementById('last-name').value;
-    const email = document.getElementById('email').value;
-    const phone = document.getElementById('phone').value; // Naya added field
-    const address = document.getElementById('address').value;
-    const city = document.getElementById('city').value;
-    const country = document.getElementById('country').value;
-    
-    // Jo payment method customer select karega
-    const paymentMethod = document.querySelector('input[name="payment_method"]:checked') ? document.querySelector('input[name="payment_method"]:checked').value : 'COD';
-
-    // WhatsApp ka message taiyar karna
-    const whatsappMessage = `*New Order Received!*\n\n` +
-                            `*Name:* ${firstName} ${lastName}\n` +
-                            `*Email:* ${email}\n` +
-                            `*Phone:* ${phone}\n` +
-                            `*Address:* ${address}\n` +
-                            `*City:* ${city}\n` +
-                            `*Country:* ${country}\n` +
-                            `*Payment Method:* ${paymentMethod.toUpperCase()}`;
-
-    // Message ko URL friendly banana
-    const encodedMessage = encodeURIComponent(whatsappMessage);
-
-    // Aapka WhatsApp number
-    const myWhatsAppNumber = "923352754141"; 
-
-    // Customer ko WhatsApp par redirect karna
-    window.open(`https://wa.me/${myWhatsAppNumber}?text=${encodedMessage}`, '_blank');
-    
-    // Website par success screen dikhane ke liye
-    document.getElementById('checkout-form').style.display = 'none';
-    document.getElementById('checkout-success').style.display = 'block';
-    const senderAccount = document.getElementById('sender-account').value || 'N/A';
-const trxId = document.getElementById('trx-id').value || 'N/A';
-
-// WhatsApp Message updates:
-`*Payment Method:* ${paymentMethod.toUpperCase()}\n` +
-`*Sender Account:* ${senderAccount}\n` +
-`*TRX ID:* ${trxId}`
-});
-</script>
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    // 1. "Continue to Payment" button ko dhoondna
-    const continueBtn = document.querySelector('button[data-step="2"]');
-    
-    if (continueBtn) {
-        // Purane function ko rok kar apna naya checker lagana
-        continueBtn.addEventListener("click", function(e) {
-            // Shipping ke zaroori boxes ko check karna
-            const firstName = document.getElementById('first-name') || document.querySelector('input[placeholder*="First"]');
-            const phone = document.getElementById('phone') || document.querySelector('input[placeholder*="Phone"]');
-            const address = document.getElementById('address') || document.querySelector('input[placeholder*="Address"]');
-            const city = document.getElementById('city') || document.querySelector('input[placeholder*="City"]');
-            
-            // Agar koi bhi box khali ho
-            if ((firstName && !firstName.value.trim()) || 
-                (phone && !phone.value.trim()) || 
-                (address && !address.value.trim()) || 
-                (city && !city.value.trim())) {
-                
-                // Agale step par jaane se rok dena
-                e.stopImmediatePropagation();
-                e.preventDefault();
-                
-                // Customer ko bolna ke pehle details fill karein
-                alert("⚠️ Please fill in your Shipping Details (Name, Phone, Address, City) before proceeding to Payment!");
-                return false;
+        @media (max-width: 768px) {
+            .checkout-layout {
+                grid-template-columns: 1fr;
             }
-        }, true); // 'true' lagane se yeh validation pehle chalegi, baki step change baad mein hoga
+        }
+
+        .main-content {
+            border: 1px solid var(--border);
+            padding: 25px;
+            border-radius: 8px;
+            background: #fff;
+        }
+
+        .sidebar-summary {
+            border: 1px solid var(--border);
+            padding: 20px;
+            border-radius: 8px;
+            background: var(--gray-light);
+            height: fit-content;
+        }
+
+        /* Steps Indicator */
+        .steps-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--gray-light);
+            padding-bottom: 10px;
+        }
+
+        .step-tab {
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: #aaa;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            flex: 1;
+            text-align: center;
+        }
+
+        .step-tab.active {
+            color: var(--primary);
+            border-bottom: 2px solid var(--primary);
+            margin-bottom: -12px;
+            padding-bottom: 10px;
+        }
+
+        .checkout-step {
+            display: none;
+        }
+
+        .checkout-step.active {
+            display: block;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 1rem;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+
+        /* Payment Methods */
+        .payment-box {
+            border: 1px solid var(--border);
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            background: #fff;
+        }
+
+        .payment-box label {
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .payment-box input[type="radio"] {
+            margin-right: 12px;
+            transform: scale(1.2);
+        }
+
+        .payment-box p {
+            margin: 5px 0 0 28px;
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        #verification-area {
+            display: none;
+            background: #fff;
+            padding: 15px;
+            border: 1px dashed var(--success);
+            border-radius: 6px;
+            margin-top: 15px;
+        }
+
+        .review-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .actions-wrapper {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: #666;
+            border: 1px solid var(--border);
+        }
+
+        /* Trust Badges */
+        .trust-badges {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+            font-size: 0.75rem;
+            color: #666;
+            border-top: 1px solid var(--border);
+            padding-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="checkout-layout">
+    
+    <div class="main-content">
+        <div class="steps-header">
+            <div class="step-tab active" id="tab-1">Shipping</div>
+            <div class="step-tab" id="tab-2">Payment</div>
+            <div class="step-tab" id="tab-3">Review</div>
+        </div>
+
+        <div class="checkout-step active" id="step-1">
+            <h3>Shipping Details</h3>
+            <div class="form-group">
+                <label>Full Name *</label>
+                <input type="text" id="cust-name" class="form-control" placeholder="Enter your full name">
+            </div>
+            <div class="form-group">
+                <label>Phone Number (WhatsApp Active) *</label>
+                <input type="tel" id="cust-phone" class="form-control" placeholder="e.g. 03001234567">
+            </div>
+            <div class="form-group">
+                <label>Complete Address *</label>
+                <input type="text" id="cust-address" class="form-control" placeholder="House/Shop no, Street, Area">
+            </div>
+            <div class="form-group">
+                <label>City *</label>
+                <input type="text" id="cust-city" class="form-control" placeholder="e.g. Karachi, Lahore, Islamabad">
+            </div>
+            
+            <div class="actions-wrapper">
+                <div></div>
+                <button class="btn btn-primary" onclick="goToStep(2)">Continue to Payment →</button>
+            </div>
+        </div>
+
+        <div class="checkout-step" id="step-2">
+            <h3>Select Payment Method</h3>
+            
+            <div class="payment-box">
+                <label>
+                    <input type="radio" name="pay_method" value="COD" checked onchange="handlePaymentChange()">
+                    Cash on Delivery (COD)
+                </label>
+                <p>Pay with cash when the parcel is delivered to your doorstep.</p>
+            </div>
+
+            <div class="payment-box">
+                <label>
+                    <input type="radio" name="pay_method" value="EasyPaisa" onchange="handlePaymentChange()">
+                    EasyPaisa
+                </label>
+                <p>Transfer to EasyPaisa Account: <strong>03352754141</strong></p>
+            </div>
+
+            <div class="payment-box">
+                <label>
+                    <input type="radio" name="pay_method" value="JazzCash" onchange="handlePaymentChange()">
+                    JazzCash
+                </label>
+                <p>Transfer to JazzCash Account: <strong>03352754141</strong></p>
+            </div>
+
+            <div id="verification-area">
+                <h4 id="verify-title" style="margin: 0 0 10px 0;">Verification Details</h4>
+                <div class="form-group">
+                    <label>Your Account Number (Sender Phone):</label>
+                    <input type="text" id="sender-num" class="form-control" placeholder="03xxxxxxxxx">
+                </div>
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label>Transaction ID (TRX ID):</label>
+                    <input type="text" id="trx-id" class="form-control" placeholder="Enter Transaction ID">
+                </div>
+            </div>
+
+            <div class="actions-wrapper">
+                <button class="btn btn-secondary" onclick="goToStep(1)">← Back</button>
+                <button class="btn btn-primary" onclick="goToStep(3)">Review Order →</button>
+            </div>
+        </div>
+
+        <div class="checkout-step" id="step-3">
+            <h3>Review Your Order</h3>
+            
+            <div style="background: var(--gray-light); padding: 15px; border-radius: 6px; margin-bottom: 20px;">
+                <div class="review-row"><strong>Name:</strong> <span id="rev-name">-</span></div>
+                <div class="review-row"><strong>Phone:</strong> <span id="rev-phone">-</span></div>
+                <div class="review-row"><strong>Address:</strong> <span id="rev-address">-</span></div>
+                <div class="review-row"><strong>Method:</strong> <span id="rev-method">-</span></div>
+                <div id="rev-trx-row" class="review-row" style="display: none;"><strong>TRX ID:</strong> <span id="rev-trx">-</span></div>
+            </div>
+
+            <div class="actions-wrapper">
+                <button class="btn btn-secondary" onclick="goToStep(2)">← Back</button>
+                <button class="btn btn-primary" style="background-color: #21ba45;" onclick="submitToWhatsApp()">⚡ PLACE ORDER VIA WHATSAPP</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="sidebar-summary">
+        <h4 style="margin-top: 0; text-transform: uppercase; border-bottom: 1px solid var(--border); padding-bottom: 10px;">Order Summary</h4>
+        
+        <div style="display: flex; justify-content: space-between; margin: 15px 0; font-size: 0.95rem;">
+            <span>Subtotal</span>
+            <strong>Rs <span id="summary-subtotal">0</span></strong>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin: 15px 0; font-size: 0.95rem;">
+            <span>Delivery Charges</span>
+            <strong style="color: var(--success);">FREE</strong>
+        </div>
+        
+        <div style="display: flex; justify-content: space-between; margin-top: 20px; padding-top: 15px; border-top: 2px solid var(--border); font-size: 1.15rem;">
+            <span><strong>Total (Incl. VAT)</strong></span>
+            <strong style="color: #000;">Rs <span id="summary-total">0</span></strong>
+        </div>
+
+        <div class="trust-badges">
+            <span>📦 3-5 Days Delivery</span>
+            <span>🛡️ 100% Authentic</span>
+            <span>💬 24/7 Support</span>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Automatically fetch subtotal from cart memory
+    function updateOrderSummary() {
+        // Agar aapke shop page par total amount kisi variable ya localStorage mein save hai:
+        let cartTotal = localStorage.getItem('cartTotal') || "2499"; // Default backup value
+        document.getElementById('summary-subtotal').innerText = cartTotal;
+        document.getElementById('summary-total').innerText = cartTotal;
     }
-});
-</script
+
+    window.onload = updateOrderSummary;
+
+    function goToStep(stepNum) {
+        if (stepNum === 2) {
+            const name = document.getElementById('cust-name').value.trim();
+            const phone = document.getElementById('cust-phone').value.trim();
+            const address = document.getElementById('cust-address').value.trim();
+            const city = document.getElementById('cust-city').value.trim();
+
+            if (!name || !phone || !address || !city) {
+                alert("⚠️ Please fill out all Shipping fields before going to Payment!");
+                return;
+            }
+        }
+
+        if (stepNum === 3) {
+            const selectedMethod = document.querySelector('input[name="pay_method"]:checked').value;
+            
+            document.getElementById('rev-name').innerText = document.getElementById('cust-name').value;
+            document.getElementById('rev-phone').innerText = document.getElementById('cust-phone').value;
+            document.getElementById('rev-address').innerText = document.getElementById('cust-address').value + ", " + document.getElementById('cust-city').value;
+            document.getElementById('rev-method').innerText = selectedMethod;
+
+            if (selectedMethod !== 'COD') {
+                const trx = document.getElementById('trx-id').value.trim();
+                const sender = document.getElementById('sender-num').value.trim();
+                if(!trx || !sender) {
+                    alert("⚠️ Please provide Sender Account Number and TRX ID for verification!");
+                    return;
+                }
+                document.getElementById('rev-trx').innerText = trx + " (From: " + sender + ")";
+                document.getElementById('rev-trx-row').style.display = 'flex';
+            } else {
+                document.getElementById('rev-trx-row').style.display = 'none';
+            }
+        }
+
+        document.querySelectorAll('.checkout-step').forEach(step => step.classList.remove('active'));
+        document.querySelectorAll('.step-tab').forEach(tab => tab.classList.remove('active'));
+
+        document.getElementById(`step-${stepNum}`).classList.add('active');
+        document.getElementById(`tab-${stepNum}`).classList.add('active');
+    }
+
+    function handlePaymentChange() {
+        const selectedMethod = document.querySelector('input[name="pay_method"]:checked').value;
+        const targetDiv = document.getElementById('verification-area');
+        const targetTitle = document.getElementById('verify-title');
+
+        if (selectedMethod === 'COD') {
+            targetDiv.style.display = 'none';
+        } else {
+            targetDiv.style.display = 'block';
+            if (selectedMethod === 'EasyPaisa') {
+                targetDiv.style.borderColor = 'var(--success)';
+                targetTitle.innerText = 'EasyPaisa Verification';
+                targetTitle.style.color = 'var(--success)';
+            } else {
+                targetDiv.style.borderColor = 'var(--jazzcash)';
+                targetTitle.innerText = 'JazzCash Verification';
+                targetTitle.style.color = 'var(--jazzcash)';
+            }
+        }
+    }
+
+    function submitToWhatsApp() {
+        const targetWhatsAppNumber = "923352754141";
+        
+        const name = document.getElementById('cust-name').value;
+        const phone = document.getElementById('cust-phone').value;
+        const address = document.getElementById('cust-address').value;
+        const city = document.getElementById('cust-city').value;
+        const method = document.querySelector('input[name="pay_method"]:checked').value;
+        const totalBill = document.getElementById('summary-total').innerText;
+        
+        let msg = `*NEW ORDER RECEIVED - ZENTORA*\n\n`;
+        msg += `👤 *Customer Name:* ${name}\n`;
+        msg += `📞 *Phone Number:* ${phone}\n`;
+        msg += `📍 *Shipping Address:* ${address}, ${city}\n`;
+        msg += `💰 *Total Amount:* Rs ${totalBill} (Free Delivery)\n`;
+        msg += `💳 *Payment Method:* ${method}\n`;
+
+        if (method !== 'COD') {
+            const sender = document.getElementById('sender-num').value;
+            const trx = document.getElementById('trx-id').value;
+            msg += `📲 *Sender Account:* ${sender}\n`;
+            msg += `🆔 *Transaction ID (TRX):* ${trx}\n`;
+        }
+
+        msg += `\n_Please process this order. Thank you!_`;
+
+        const encodedMessage = encodeURIComponent(msg);
+        const whatsappURL = `https://api.whatsapp.com/send?phone=${targetWhatsAppNumber}&text=${encodedMessage}`;
+        
+        window.open(whatsappURL, '_blank');
+    }
+</script>
+
 </body>
 </html>
