@@ -12,8 +12,9 @@
   <link rel="stylesheet" href="css/styles.css" />
   <link rel="icon" type="image/png" href="favicon.png.png">
   <style>
-    /* High-end Admin Panel Styling */
+    /* Admin Panel Styling - Customer Se Chupa Rahega */
     .admin-section {
+      display: none; 
       background: #fdfdfd;
       border: 2px dashed #111;
       padding: 20px;
@@ -47,7 +48,22 @@
       width: 100%;
       text-transform: uppercase;
     }
+    /* Invisible Button - Screen ke bottom-left kone me access point */
+    .secret-trigger {
+      position: fixed;
+      bottom: 10px;
+      left: 10px;
+      width: 20px;
+      height: 20px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      z-index: 9999;
+    }
   </style>
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 </head>
 <body data-page="shop">
 
@@ -78,15 +94,16 @@
 
   <div class="page-hero">
     <div class="container">
-      <span class="section-label">The Collection</span>
+      <span class="section-label">Global Collection</span>
       <h1>Shop All Products</h1>
     </div>
   </div>
 
   <div class="container shop-layout">
     <aside class="shop-filters">
-      <div class="admin-section">
-        <h4 style="margin-top:0; color:#111;">📢 POST NEW PRODUCT</h4>
+      
+      <div class="admin-section" id="admin-panel">
+        <h4 style="margin-top:0; color:#111;">📢 POST GLOBAL PRODUCT (ADMIN)</h4>
         <div class="admin-form-group">
           <label>Product Title:</label>
           <input type="text" id="new-p-name" class="admin-input" placeholder="e.g. Luxury Shirt">
@@ -105,32 +122,22 @@
           </select>
         </div>
         <div class="admin-form-group">
-          <label>Image Link / Path:</label>
-          <input type="text" id="new-p-img" class="admin-input" placeholder="images/product.jpg">
+          <label>Image Link or Path (e.g. images/shirt.jpg):</label>
+          <input type="text" id="new-p-img" class="admin-input" placeholder="images/product.jpg ya direct URL link">
         </div>
-        <button class="admin-btn" onclick="addNewProductLive()">🚀 Publish Product</button>
+        <button class="admin-btn" onclick="uploadProductToFirebase()">🚀 Publish to Everyone</button>
       </div>
 
       <h3>Filters</h3>
       <div class="filter-group">
         <label for="filter-search">Search</label>
-        <input type="search" id="filter-search" placeholder="Search products..." oninput="filterProducts()" />
-      </div>
-      <div class="filter-group">
-        <label for="filter-category">Category</label>
-        <select id="filter-category" onchange="filterProducts()">
-          <option value="all">All Categories</option>
-          <option value="fashion">Fashion</option>
-          <option value="beauty">Beauty</option>
-          <option value="tech">Tech</option>
-          <option value="accessories">Accessories</option>
-        </select>
+        <input type="search" id="filter-search" placeholder="Search products..." oninput="filterProductsLocalStorage()" />
       </div>
     </aside>
 
     <main>
       <div class="shop-toolbar">
-        <span id="result-count">Loading products...</span>
+        <span id="result-count">Connecting to database...</span>
       </div>
       <div class="product-grid" id="shop-grid"></div>
     </main>
@@ -144,26 +151,52 @@
     </div>
   </footer>
 
-  <script>
-    // System Core Array
-    let BASE_PRODUCTS = [
-      { id: 1, name: "Premium Luxury Watch", price: 2499, category: "accessories", image: "images/watch.jpg" },
-      { id: 2, name: "Minimalist Leather Wallet", price: 1250, category: "fashion", image: "images/wallet.jpg" }
-    ];
+  <button class="secret-trigger" onclick="unlockAdminPanel()" aria-label="Admin Access"></button>
 
-    // Facebook Style Live Product Injection Function
-    function addNewProductLive() {
+  <script>
+    // ⚠️ APNE FIREBASE PROJECT KA REAL CONFIG DETAILS YAHAN PASTE KAREIN
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_AUTH_DOMAIN",
+      databaseURL: "YOUR_DATABASE_URL",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_STORAGE_BUCKET",
+      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+    
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+
+    // Password verification function
+    function unlockAdminPanel() {
+        const password = prompt("🔑 Enter Admin Password to Upload Products:");
+        if (password === "zentora786") {
+            document.getElementById('admin-panel').style.display = 'block';
+            alert("🔓 Access Granted! Secret Admin Upload Panel is now open.");
+        } else {
+            alert("❌ Wrong Password! Access Denied.");
+        }
+    }
+
+    // Purane default dummy products empty kar diye hain
+    let BASE_PRODUCTS = [];
+    let runtimeProductsList = [];
+
+    // Cloud Firebase real-time dataset inject logic
+    function uploadProductToFirebase() {
         const name = document.getElementById('new-p-name').value.trim();
         const price = parseInt(document.getElementById('new-p-price').value);
         const category = document.getElementById('new-p-cat').value;
         const image = document.getElementById('new-p-img').value.trim() || "images/default.jpg";
 
         if(!name || !price) {
-            alert("⚠️ Please enter Product Title and Price!");
+            alert("⚠️ Title aur Price enter karna zaroori hai!");
             return;
         }
 
-        const newObj = {
+        const newProduct = {
             id: Date.now(),
             name: name,
             price: price,
@@ -171,30 +204,42 @@
             image: image
         };
 
-        // Pull existing custom products or start fresh
-        let localProducts = JSON.parse(localStorage.getItem('custom_products')) || [];
-        localProducts.push(newObj);
-        localStorage.setItem('custom_products', JSON.stringify(localProducts));
-
-        // Clear Form inputs
-        document.getElementById('new-p-name').value = "";
-        document.getElementById('new-p-price').value = "";
-        
-        alert("🎉 Product Published on the Grid Successfully!");
-        renderAll();
+        database.ref('products/').push(newProduct)
+        .then(() => {
+            alert("🎉 Product uploaded successfully! Ab yeh sab ko globally dikhega.");
+            document.getElementById('new-p-name').value = "";
+            document.getElementById('new-p-price').value = "";
+            document.getElementById('new-p-img').value = "";
+        })
+        .catch((err) => {
+            alert("Upload failed: " + err.message);
+        });
     }
 
-    function renderAll() {
-        let localProducts = JSON.parse(localStorage.getItem('custom_products')) || [];
-        let combinedProducts = [...BASE_PRODUCTS, ...localProducts];
+    // Real-time Cloud Sync Event Listener
+    database.ref('products/').on('value', (snapshot) => {
+        let firebaseProducts = [];
+        snapshot.forEach((childSnapshot) => {
+            firebaseProducts.push(childSnapshot.val());
+        });
+        runtimeProductsList = [...BASE_PRODUCTS, ...firebaseProducts];
+        renderGrid(runtimeProductsList);
+    });
 
+    function renderGrid(products) {
         const grid = document.getElementById('shop-grid');
         grid.innerHTML = "";
+        
+        if(products.length === 0) {
+            grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: #888; padding: 40px; font-weight: 500;">No products found. Open secret admin panel to post real items!</div>`;
+            document.getElementById('result-count').innerText = `0 products listed`;
+            return;
+        }
 
-        combinedProducts.forEach(product => {
+        products.forEach(product => {
             grid.innerHTML += `
                 <div class="product-card" style="border: 1px solid #eee; padding: 15px; border-radius: 8px; background:#fff;">
-                    <img src="${product.image}" alt="${product.name}" style="width:100%; height:200px; object-fit:cover; border-radius:4px; margin-bottom:10px;">
+                    <img src="${product.image}" alt="${product.name}" style="width:100%; height:200px; object-fit:cover; border-radius:4px; margin-bottom:10px;" onerror="this.src='images/default.jpg';">
                     <span style="font-size:0.75rem; text-transform:uppercase; color:#888; font-weight:bold;">${product.category}</span>
                     <h4 style="margin: 5px 0; font-size:1rem; color:#111;">${product.name}</h4>
                     <p style="font-weight:bold; color:#000; margin: 5px 0 15px 0;">Rs ${product.price}</p>
@@ -202,17 +247,21 @@
                 </div>
             `;
         });
-        document.getElementById('result-count').innerText = `${combinedProducts.length} products listed`;
+        document.getElementById('result-count').innerText = `${products.length} products listed globally`;
+    }
+
+    function filterProductsLocalStorage() {
+        const query = document.getElementById('filter-search').value.toLowerCase();
+        const filtered = runtimeProductsList.filter(p => p.name.toLowerCase().includes(query));
+        renderGrid(filtered);
     }
 
     function addToCart(price) {
         let currentTotal = parseInt(localStorage.getItem('cartTotal')) || 0;
         currentTotal += price;
         localStorage.setItem('cartTotal', currentTotal);
-        alert("🛒 Added to cart! Secure memory updated.");
+        alert("🛒 Product added to cart successfully!");
     }
-
-    window.onload = renderAll;
   </script>
 
   <script type="module" src="js/app.js"></script>
